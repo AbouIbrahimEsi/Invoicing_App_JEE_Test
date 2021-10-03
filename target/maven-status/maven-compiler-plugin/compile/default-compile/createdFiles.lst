@@ -1,0 +1,13 @@
+dz\eadn\invoicing\model\SalesOrder.class
+dz\eadn\invoicing\view\OrderBean$1.class
+dz\eadn\invoicing\view\OrderBean.class
+dz\eadn\invoicing\view\ProductBean$1.class
+dz\eadn\invoicing\JAXRSConfiguration.class
+dz\eadn\invoicing\beans\ProductConverter.class
+dz\eadn\invoicing\model\OrderDetails.class
+dz\eadn\invoicing\service\ProductService.class
+dz\eadn\invoicing\model\Product.class
+dz\eadn\invoicing\model\Customer.class
+dz\eadn\invoicing\resources\JavaEE8Resource.class
+dz\eadn\invoicing\view\CustomerBean.class
+dz\eadn\invoicing\view\ProductBean.class

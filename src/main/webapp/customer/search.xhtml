@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+	template="/templateHtml.xhtml">
+
+	<ui:param name="pageTitle" value="Search Customer entities"/>
+
+	<ui:define name="header">
+            <center>
+                Customer
+            </center>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+
+            <center>
+                <h:form id="search">
+			<h:messages globalOnly="true" styleClass="error"/>                   
+                        
+                        <!--*****************************************************************************************-->
+                        <div class="card crud-demo" style="width: 80%">
+                            <p:growl id="messages" showDetail="true"/>
+                                                      
+                            <p:dataTable id="dt-customerList" widgetVar="dtCustomerList" var="customer" value="#{customerBean.customerList}"
+                                         reflow="true" styleClass="product-table"
+                                         selection="#{customerBean.selectedCustomerList}" rowKey="#{customer.id}" paginator="true"
+                                         rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <div class="customerList-table-header">
+                                        <span style="font-weight: bold">Customers List</span>
+                                        
+                                        <span class="filter-container ui-input-icon-left" style="margin-left: 20px">
+                                            <i class="pi pi-search"></i>
+                                            <p:inputText id="globalFilter" onkeyup="PF('dtCustomerList').filter()" placeholder="Search"/>
+                                        </span>
+                                        
+                                    </div>
+                                </f:facet>
+
+                                <p:ajax event="rowSelect" update=":search:delete-customerList-button"/>
+                                <p:ajax event="rowUnselect" update=":search:delete-customerList-button"/>
+                                <p:ajax event="rowSelectCheckbox" update=":search:delete-customerList-button"/>
+                                <p:ajax event="rowUnselectCheckbox" update=":search:delete-customerList-button"/>
+                                <p:ajax event="toggleSelect" update=":search:delete-customerList-button"/>
+
+                                <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                                <p:column headerText="Code" sortBy="#{customer.id}" filterBy="#{customer.id}" >
+                                    <h:outputText value="#{customer.id}"/>
+                                </p:column>
+                                <p:column headerText="First Name" sortBy="#{customer.firstName}" filterBy="#{customer.firstName}">
+                                    <h:outputText value="#{customer.firstName}"/>
+                                </p:column>
+                                <p:column headerText="Last Name" sortBy="#{customer.lastName}" filterBy="#{customer.lastName}">
+                                    <h:outputText value="#{customer.lastName}" />
+                                </p:column>
+                                <p:column headerText="Email" sortBy="#{customer.mail}" filterBy="#{customer.mail}">
+                                    <h:outputText value="#{customer.mail}" />
+                                </p:column>
+                                <p:column exportable="false">
+                                    
+                                    <p:button icon="pi pi-pencil" outcome = "createEdit.xhtml?faces-redirect=true"
+                                                     styleClass="edit-button rounded-button ui-button-success">
+                                        <f:param name="id" value="#{customer.id}"/>
+                                    </p:button>
+                                                                        
+                                    <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                                     oncomplete="PF('deleteCustomerDialog').show()">
+                                        <f:setPropertyActionListener value="#{customer}" target="#{customerBean.selectedCustomer}"/>
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                            
+                            
+                            <p:toolbar>
+                                <p:toolbarGroup>
+                                    
+                                    <p:commandButton value="New" icon="pi pi-plus" action = "createEdit.xhtml?faces-redirect=true"
+                                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                                    </p:commandButton>
+                                                                                                         
+                                    <p:commandButton id="delete-customerList-button" value="#{customerBean.deleteButtonMessage}"
+                                                     icon="pi pi-trash" actionListener="#{customerBean.deleteSelectedCustomerList}"
+                                                     styleClass="ui-button-danger" disabled="#{!customerBean.hasSelectedCustomerList()}"
+                                                     update="@this">
+                                        <p:confirm header="Confirmation" message="Delete the selected Customers ?"
+                                                   icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:toolbarGroup>
+                                
+                            </p:toolbar>
+                         
+                            <p:confirmDialog widgetVar="deleteCustomerDialog" showEffect="fade" width="300"
+                                             message="Delete the customer ?" header="Confirm" severity="warn">
+                                <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{customerBean.deleteCustomer}"
+                                                 process="@this" oncomplete="PF('deleteCustomerDialog').hide()"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                                 onclick="PF('deleteCustomerDialog').hide()"/>
+                            </p:confirmDialog>
+
+                            <p:confirmDialog global="true" showEffect="fade" width="300">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                                 icon="pi pi-times"/>
+                            </p:confirmDialog>
+                                                       
+                            
+                                                      
+                        </div>
+                        <!--*****************************************************************************************-->
+                        
+                                                
+		</h:form>
+            </center>
+		
+
+		
+	</ui:define>
+        
+
+
+</ui:composition>

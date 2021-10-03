@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        </f:facet>
+    
+	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+	<link rel="icon" href='#{resource["favicon.ico"]}' />
+<!--	<h:outputStylesheet name="bootstrap.css" />-->
+	<h:outputStylesheet name="app-style.css" />          
+        <h:outputStylesheet name="css/primeflex.css" library="showcase"/>
+        <h:outputStylesheet name="css/flags/flags.css" library="showcase"/>
+        
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+</h:head>
+
+    <h:body >
+    <f:view>
+	<ui:debug rendered="#{facesContext.application.projectStage == 'Development'}" />
+
+        <p:sidebar widgetVar="sidebar1" baseZIndex="10000">
+            <h3>Orders Invoicing</h3>            
+
+            <h:form>
+                <p:growl id="messages" showDetail="true"/>
+
+                <p:tieredMenu style="width:200px">
+                            <p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="/index"/>
+                            <p:menuitem value="Customer" icon="pi pi-fw pi-id-card" outcome="/customer/search"/>
+                            <p:menuitem value="Product" icon="pi pi-fw pi-ticket" />
+                            <p:menuitem value="Order" icon="pi pi-fw pi-shopping-cart" />
+                </p:tieredMenu>
+
+            </h:form>
+
+        </p:sidebar>
+
+        <p:commandButton icon="pi pi-list" type="button" onclick="PF('sidebar1').show()" styleClass="p-mr-2" style="margin: 20px 0px 0px 20px" />
+
+        <div id="content">
+                <h1>
+                        <ui:insert name="header" />
+                </h1>
+                <h2>
+                        <ui:insert name="subheader" />
+                </h2>
+
+                <ui:insert name="main" />
+        </div>
+        
+        <h:outputStylesheet name="css/layout/layout.css" library="showcase"/>
+        <h:outputScript name="script/layout.js" library="showcase" />
+        <h:outputScript name="showcase/script/prism.js" />
+    
+    </f:view>
+
+
+</h:body>
+</html>
